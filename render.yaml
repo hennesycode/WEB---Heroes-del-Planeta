@@ -10,3 +10,4 @@ services:
     branch: main
     repo: https://github.com/Carlos-An22On/Heroesdelplaneta
     pythonVersion: 3.11.9
+preDeployCommand: "python manage.py migrate && python manage.py collectstatic --noinput"
