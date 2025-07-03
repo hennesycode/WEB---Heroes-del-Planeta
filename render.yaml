@@ -1,30 +1,10 @@
 services:
   - type: web
-    name: heroes-del-planeta
-    runtime: python
+    name: heroesdelplaneta
+    env: python
     buildCommand: "pip install -r requirements.txt"
     startCommand: "gunicorn config.wsgi:application"
-    envVars:
-      - key: DJANGO_SETTINGS_MODULE
-        value: config.settings
-      - key: PYTHON_VERSION
-        value: 3.12.2
-services:
-  - type: web
-    name: heroes-del-planeta
-    runtime: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn config.wsgi:application"
-    envVars:
-      - key: DJANGO_SETTINGS_MODULE
-        value: config.settings
-      - key: PYTHON_VERSION
-        value: 3.11
-      - key: DATABASE_URL
-        fromDatabase:
-          name: heroes_del_planeta_db
-          property: connectionString
     plan: free
-build:
-  pythonVersion: 3.11.8
-
+    build:
+      environment:
+        pythonVersion: 3.11.9
