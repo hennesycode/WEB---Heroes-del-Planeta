@@ -46,3 +46,6 @@ sympy==1.12.1
 tzdata==2024.1
 virtualenv==20.24.6
 Werkzeug==3.0.6
+dj-database-url
+psycopg2-binary
+
