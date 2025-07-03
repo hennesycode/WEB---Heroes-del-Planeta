@@ -8,6 +8,3 @@ services:
     build:
       environment:
         pythonVersion: 3.11.9
-build:
-  environment:
-    pythonVersion: 3.11.9
