@@ -161,3 +161,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'heroesplaneta.esp@gmail.com'
 EMAIL_HOST_PASSWORD = 'xnpl ivuq aoep kjgs'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
