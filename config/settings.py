@@ -83,12 +83,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 import dj_database_url
+import os
+
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://...',  # Puedes dejarlo así, lo sobreescribiremos con la variable de entorno en Render.
+        default='postgres://',  # Render lo sobreescribe con la variable de entorno
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=True,
     )
 }
 
