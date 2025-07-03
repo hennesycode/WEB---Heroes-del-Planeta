@@ -25,3 +25,5 @@ services:
           name: heroes_del_planeta_db
           property: connectionString
     plan: free
+build:
+  pythonVersion: 3.11.8
