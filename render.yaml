@@ -1,21 +1,11 @@
 services:
   - type: web
-    name: Heroesdelplaneta
-    env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn config.wsgi:application"
-    preDeployCommand: "python manage.py migrate && python manage.py collectstatic --noinput"
-    runtime: python
-    region: oregon
-    branch: main
-    repo: https://github.com/Carlos-An22On/Heroesdelplaneta
-    pythonVersion: 3.11.9
-preDeployCommand: "python manage.py migrate && python manage.py collectstatic --noinput"
-services:
-  - type: web
     name: heroesdelplaneta
     env: python
     buildCommand: |
       pip install -r requirements.txt
       python manage.py migrate --noinput
     startCommand: gunicorn config.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
