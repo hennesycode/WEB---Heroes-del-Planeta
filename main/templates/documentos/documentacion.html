@@ -14,12 +14,18 @@
     Aquí puedes visualizar el Contrato de Condiciones Uniformes para los usuarios del servicio.
   </div>
 
+  <div class="ratio" style="--bs-aspect-ratio: 125%;">
+  <iframe src="{% static 'pdf/contrato_condiciones_uniformes1.pdf' %}" 
+          frameborder="0" 
+          allowfullscreen></iframe>
+</div>
+
   <div class="ratio ratio-16x9 shadow-sm rounded mb-3">
-    <iframe src="{% static 'pdf/contrato_condiciones_uniformes.pdf' %}" frameborder="0" allowfullscreen></iframe>
+    <iframe src="{% static 'pdf/contrato_condiciones_uniformes(2).pdf' %}" frameborder="0" allowfullscreen></iframe>
   </div>
 
   <a href="{% static 'pdf/contrato_condiciones_uniformes.pdf' %}" target="_blank" class="btn btn-success">
     <i class="bi bi-download"></i> Descargar PDF
   </a>
 </div>
-{% endblock %}
+{% endblock %}

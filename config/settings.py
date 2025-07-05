@@ -84,8 +84,20 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 import dj_database_url
 import os
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'heroes_local',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 
+'''
 DATABASES = {
     'default': dj_database_url.config(
         default='postgres://',  # Render lo sobreescribe con la variable de entorno
