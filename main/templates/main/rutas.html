@@ -14,48 +14,25 @@
       <img src="{% static 'img/rutas_principal.png' %}" class="img-fluid rounded shadow" alt="Mapa de rutas">
     </div>
     <div class="col-md-5 d-flex align-items-center">
-  <div class="bg-white bg-opacity-75 p-4 rounded shadow-sm">
-    <h3 class="text-success fw-bold mb-3">
-      <i class="bi bi-info-circle-fill"></i> Cobertura de Rutas
-    </h3>
-    <p class="fs-5 mb-0">
-      En <strong>Héroes del Planeta</strong> trabajamos en más de <strong>200 microrutas</strong>
-      en distintos sectores del municipio, atendiendo cada zona con compromiso y eficiencia
-      por parte de nuestros recicladores.
-    </p>
+      <div class="bg-white bg-opacity-75 p-4 rounded shadow-sm">
+        <h3 class="text-success fw-bold mb-3">
+          <i class="bi bi-info-circle-fill"></i> Cobertura de Rutas
+        </h3>
+        <p class="fs-5 mb-0">
+          En <strong>Héroes del Planeta</strong> trabajamos en más de <strong>200 microrutas</strong>
+          en distintos sectores del municipio, atendiendo cada zona con compromiso y eficiencia
+          por parte de nuestros recicladores.
+        </p>
+      </div>
+    </div>
+  </div>
 
+  <!-- Mapa interactivo -->
+  <h4 class="text-success mb-3"><i class="bi bi-geo-alt-fill"></i> Visualiza nuestras rutas</h4>
+  <div class="map-responsive shadow-sm rounded mb-5">
+    <iframe src="https://www.google.com/maps/d/embed?mid=1HSQeFrPZ1yaNGhZYKFj5nC5FSCB1d28&ehbc=2E312F"
+            width="100%" height="480" style="border:0;" allowfullscreen loading="lazy">
+    </iframe>
   </div>
 </div>
-
-
-  <h4 class="text-success mb-3"><i class="bi bi-file-earmark-pdf"></i> Rutas por reciclador</h4>
-  <div id="carouselPdf" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-
-      <!-- Ejemplo de PDF en carousel -->
-      <div class="carousel-item active">
-        <div class="ratio ratio-16x9">
-          <iframe src="{% static 'pdf/rutas_reciclador_1.pdf' %}#zoom=130" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </div>
-
-      <!-- Puedes agregar más PDF aquí -->
-      <!--
-      <div class="carousel-item">
-        <div class="ratio ratio-16x9">
-          <iframe src="{% static 'pdf/rutas_reciclador_2.pdf' %}#zoom=130" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </div>
-      -->
-</div>
-<div class="map-responsive shadow-sm rounded">
-  <iframe src="https://www.google.com/maps/d/embed?mid=1HSQeFrPZ1yaNGhZYKFj5nC5FSCB1d28&ehbc=2E312F"
-          width="100%" 
-          height="450" 
-          style="border:0;" 
-          allowfullscreen="" 
-          loading="lazy">
-  </iframe>
-</div>
-
-{% endblock %}
+{% endblock %}
