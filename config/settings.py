@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 import dj_database_url
 import os
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -112,7 +112,7 @@ DATABASES = {
         ssl_require=True,
     )
 }
-'''
+
 
 
 # Password validation
