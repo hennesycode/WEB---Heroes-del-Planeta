@@ -11,13 +11,13 @@
 
   <div class="row">
     <div class="col-md-6 mb-4">
-      <div class="card shadow-sm p-3">
+      <div class="card shadow-sm p-3 chart-container">
         <h5 class="text-center">Toneladas Transportadas y Aprovechadas</h5>
         <canvas id="chartAprovechadas"></canvas>
       </div>
     </div>
     <div class="col-md-6 mb-4">
-      <div class="card shadow-sm p-3">
+      <div class="card shadow-sm p-3 chart-container">
         <h5 class="text-center">Rechazos</h5>
         <canvas id="chartRechazos"></canvas>
       </div>
@@ -25,13 +25,21 @@
   </div>
 </div>
 
+<!-- Estilo para tamaño fijo sin deformar -->
+<style>
+  .chart-container {
+    height: 350px; /* ajusta aquí si lo quieres más grande */
+    position: relative;
+  }
+</style>
+
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
-  const toneladasAprovechadas = [437.029, 439.169, 439.776, 440.620, 440.889, 441.131, , , , , , ];
-  const toneladasRechazos = [0.610, 1.070, 0.628, 2.790, 3.820,   , , , , , , ];
+  const toneladasAprovechadas = [437.029, 439.169, 439.776, 440.620, 440.889, 441.131, null, null, null, null, null, null];
+  const toneladasRechazos = [0.610, 1.070, 0.628, 2.790, 3.820, null, null, null, null, null, null, null];
 
   const chartAprovechadas = new Chart(document.getElementById('chartAprovechadas'), {
     type: 'bar',
@@ -47,11 +55,14 @@
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       scales: {
         y: {
-          beginAtZero: true,
+          beginAtZero: false,
+          suggestedMin: 430,
+          suggestedMax: 400,
           ticks: {
-            stepSize: 5
+            stepSize: 2
           }
         }
       }
@@ -72,9 +83,11 @@
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       scales: {
         y: {
           beginAtZero: true,
+          suggestedMax: 5,
           ticks: {
             stepSize: 1
           }

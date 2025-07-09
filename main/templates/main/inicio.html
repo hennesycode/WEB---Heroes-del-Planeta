@@ -68,25 +68,100 @@
 </div>
 
 <!-- GALERÍA -->
+<!-- GALERÍA POR CATEGORÍAS -->
 <div id="galeria" class="container mb-5">
   <h2 class="text-center text-success mb-4">Galería</h2>
-  <div class="row g-3">
-    <div class="col-sm-6 col-md-4">
-      <img src="{% static 'img/galeria1.jpg' %}" class="img-fluid rounded shadow" alt="Galería 1">
+
+  <!-- Nav Tabs -->
+  <ul class="nav nav-tabs justify-content-center mb-4" id="galleryTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="sensibilizaciones-tab" data-bs-toggle="tab" data-bs-target="#sensibilizaciones" type="button" role="tab">Sensibilizaciones</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="eventos-tab" data-bs-toggle="tab" data-bs-target="#eventos" type="button" role="tab">Eventos</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="trabajo-tab" data-bs-toggle="tab" data-bs-target="#trabajo" type="button" role="tab">Trabajo</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="brigadas-tab" data-bs-toggle="tab" data-bs-target="#brigadas" type="button" role="tab">Brigadas</button>
+    </li>
+  </ul>
+
+  <!-- Tab Content -->
+  <div class="tab-content" id="galleryTabsContent">
+
+    <!-- Sensibilizaciones -->
+    <div class="tab-pane fade show active" id="sensibilizaciones" role="tabpanel">
+      <div class="row g-3">
+        <div class="col-sm-6 col-md-4">
+          <img src="{% static 'img/galeria1.png' %}" class="img-fluid rounded shadow" alt="Sensibilización 1">
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <img src="{% static 'img/galeria2.png' %}" class="img-fluid rounded shadow" alt="Sensibilización 2">
+        </div>
+      </div>
     </div>
-    <div class="col-sm-6 col-md-4">
-      <img src="{% static 'img/galeria2.jpg' %}" class="img-fluid rounded shadow" alt="Galería 2">
+
+    <!-- Eventos -->
+    <div class="tab-pane fade" id="eventos" role="tabpanel">
+      <div class="row g-3">
+        <div class="col-sm-6 col-md-4">
+          <img src="{% static 'img/galeria3.jpg' %}" class="img-fluid rounded shadow" alt="Evento 1">
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <img src="{% static 'img/galeria4.png' %}" class="img-fluid rounded shadow" alt="Evento 2">
+        </div>
+      </div>
     </div>
-    <div class="col-sm-6 col-md-4">
-      <img src="{% static 'img/galeria3.jpg' %}" class="img-fluid rounded shadow" alt="Galería 3">
+
+    <!-- Trabajo -->
+    <div class="tab-pane fade" id="trabajo" role="tabpanel">
+      <div class="row g-3">
+        <div class="col-sm-6 col-md-4">
+          <img src="{% static 'img/galeria5.jpg' %}" class="img-fluid rounded shadow" alt="Trabajo 1">
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <img src="{% static 'img/galeria6.png' %}" class="img-fluid rounded shadow" alt="Trabajo 2">
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <img src="{% static 'img/galeria9.png' %}" class="img-fluid rounded shadow" alt="Trabajo 2">
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <img src="{% static 'img/galeria10.png' %}" class="img-fluid rounded shadow" alt="Trabajo 2">
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <img src="{% static 'img/galeria11.png' %}" class="img-fluid rounded shadow" alt="Trabajo 2">
+        </div>
+      </div>
     </div>
+
+    <!-- Brigadas -->
+    <div class="tab-pane fade" id="brigadas" role="tabpanel">
+      <div class="row g-3">
+        <div class="col-sm-6 col-md-4">
+          <img src="{% static 'img/galeria7.png' %}" class="img-fluid rounded shadow" alt="Brigada 1">
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <img src="{% static 'img/galeria8.png' %}" class="img-fluid rounded shadow" alt="Brigada 2">
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <img src="{% static 'img/galeria12.jpg' %}" class="img-fluid rounded shadow" alt="Brigada 2">
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <img src="{% static 'img/galeria13.jpg' %}" class="img-fluid rounded shadow" alt="Brigada 2">
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
+
 
 <!-- LLAMADO A LA ACCIÓN -->
 <div class="text-center bg-light py-5">
   <h3 class="text-success mb-3">¿Quieres ser parte del cambio?</h3>
-  <a href="#" class="btn btn-success btn-lg">Contáctanos</a>
+  <a href="{% url 'contacto' %}" class="btn btn-success btn-lg">Contáctanos</a>
 </div>
 
 {% endblock %}

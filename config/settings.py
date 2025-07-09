@@ -102,8 +102,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
-
 '''
 DATABASES = {
     'default': dj_database_url.config(
