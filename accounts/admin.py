@@ -8,5 +8,7 @@ class UsuarioAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
         ('Datos adicionales', {'fields': ('es_aliado', 'nombre_conjunto')}),
     )
+    
+
 
 admin.site.register(Usuario, UsuarioAdmin)

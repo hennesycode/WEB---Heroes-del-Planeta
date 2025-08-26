@@ -3,11 +3,23 @@
 
 {% block content %}
 <div class="container py-5">
-  <h2 class="mb-4 text-success fw-bold">
-    <i class="bi bi-file-earmark-text"></i> Mis Certificados
-  </h2>
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="mb-0 text-success fw-bold">
+      <i class="bi bi-file-earmark-text"></i>
+      {% if ver_todos %}Certificados (todos){% else %}Mis Certificados{% endif %}
+    </h2>
 
-  {% if certificados %}
+    <form method="get" class="d-flex gap-2">
+      <input type="text" name="q" value="{{ q|default:'' }}" class="form-control"
+             placeholder="Buscar por nombre, usuario o email">
+      <button class="btn btn-success" type="submit"><i class="bi bi-search"></i></button>
+      {% if q %}
+        <a href="{% url 'mis_certificados' %}" class="btn btn-outline-secondary">Limpiar</a>
+      {% endif %}
+    </form>
+  </div>
+
+  {% if certificados and certificados|length %}
     <div class="table-responsive">
       <table class="table table-hover table-bordered align-middle shadow-sm rounded overflow-hidden">
         <thead class="table-success text-center">
@@ -15,6 +27,9 @@
             <th scope="col">📄 Nombre</th>
             <th scope="col">📎 Archivo</th>
             <th scope="col">📅 Fecha</th>
+            {% if ver_todos %}
+              <th scope="col">👤 Usuario</th>
+            {% endif %}
           </tr>
         </thead>
         <tbody>
@@ -26,15 +41,48 @@
                   <i class="bi bi-download"></i> Descargar
                 </a>
               </td>
-              <td class="text-center">{{ cert.creado|date:"d/m/Y" }}</td>
+              <td class="text-center">{{ cert.creado|date:"d/m/Y H:i" }}</td>
+              {% if ver_todos %}
+                <td>
+                  {{ cert.usuario.username }}
+                  {% if cert.usuario.email %}
+                    <br><small class="text-muted">{{ cert.usuario.email }}</small>
+                  {% endif %}
+                </td>
+              {% endif %}
             </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
+
+    {% if certificados.paginator.num_pages > 1 %}
+      <nav class="mt-3">
+        <ul class="pagination justify-content-center">
+          {% if certificados.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ certificados.previous_page_number }}{% if q %}&q={{ q }}{% endif %}">Anterior</a>
+            </li>
+          {% endif %}
+
+          <li class="page-item disabled">
+            <span class="page-link">
+              Página {{ certificados.number }} de {{ certificados.paginator.num_pages }}
+            </span>
+          </li>
+
+          {% if certificados.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ certificados.next_page_number }}{% if q %}&q={{ q }}{% endif %}">Siguiente</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
   {% else %}
     <div class="alert alert-info shadow-sm d-flex align-items-center" role="alert">
-      <i class="bi bi-info-circle me-2"></i> No tienes certificados disponibles en este momento.
+      <i class="bi bi-info-circle me-2"></i>
+      {% if q %}No hay resultados para "{{ q }}".{% else %}No tienes certificados disponibles en este momento.{% endif %}
     </div>
   {% endif %}
 </div>
