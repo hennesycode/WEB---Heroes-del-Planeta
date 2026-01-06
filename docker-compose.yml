@@ -17,7 +17,7 @@ services:
       DATABASE_URL: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DATABASE}?charset=utf8mb4"
     depends_on:
       db:
-        condition: service_healthy
+        condition: service_started
 
   db:
     image: mysql:8.4
@@ -32,11 +32,15 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$${MYSQL_ROOT_PASSWORD} --silent"]
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h localhost -uroot -p$${MYSQL_ROOT_PASSWORD} --silent || mysqladmin ping -h localhost -u$${MYSQL_USER} -p$${MYSQL_PASSWORD} --silent",
+        ]
       interval: 10s
-      timeout: 5s
-      retries: 12
-      start_period: 30s
+      timeout: 10s
+      retries: 15
+      start_period: 40s
 
 volumes:
   mysql_data:
