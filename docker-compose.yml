@@ -15,9 +15,6 @@ services:
       DB_SSL_REQUIRE: "false"
       PORT: 5020
       DATABASE_URL: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DATABASE}?charset=utf8mb4"
-    depends_on:
-      db:
-        condition: service_started
 
   db:
     image: mysql:8.4
