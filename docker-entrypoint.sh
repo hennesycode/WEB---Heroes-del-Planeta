@@ -2,7 +2,7 @@
 set -e
 
 DB_HOST=${DB_HOST:-}
-DB_PORT=${DB_PORT:-5432}
+DB_PORT=${DB_PORT:-3306}
 
 if [ -n "$DB_HOST" ]; then
   echo "Esperando a que la base de datos esté lista en ${DB_HOST}:${DB_PORT}..."

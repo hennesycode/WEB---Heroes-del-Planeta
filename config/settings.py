@@ -97,11 +97,20 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+DB_NAME = os.environ.get('MYSQL_DATABASE', 'heroes')
+DB_USER = os.environ.get('MYSQL_USER', 'heroes')
+DB_PASSWORD = os.environ.get('MYSQL_PASSWORD', 'heroes')
+DB_HOST = os.environ.get('DB_HOST', 'localhost')
+DB_PORT = os.environ.get('DB_PORT', '3306')
+
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get("DATABASE_URL", "postgresql://heroes:heroes@db:5432/heroes"),
-        conn_max_age=int(os.environ.get("DB_CONN_MAX_AGE", "600")),
-        ssl_require=env_bool("DB_SSL_REQUIRE", "true"),
+        default=os.environ.get(
+            "DATABASE_URL",
+            f"mysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}?charset=utf8mb4",
+        ),
+        conn_max_age=int(os.environ.get("DB_CONN_MAX_AGE", "60")),
+        ssl_require=env_bool("DB_SSL_REQUIRE", "false"),
     )
 }
 
@@ -162,11 +171,11 @@ LOGIN_URL = '/login/'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'heroesplaneta.esp@gmail.com'
-EMAIL_HOST_PASSWORD = 'xnpl ivuq aoep kjgs'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
+EMAIL_USE_TLS = env_bool('EMAIL_USE_TLS', 'true')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'heroesplaneta.esp@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
 MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage" 
