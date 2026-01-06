@@ -1,43 +1,45 @@
 version: "3.9"
 
 services:
-  web:
-    build:
-      context: .
-    command: gunicorn config.wsgi:application --bind 0.0.0.0:5020 --workers 3
-    ports:
-      - "5020:5020"
-    env_file:
-      - .env
-    environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_SSL_REQUIRE: "false"
-      PORT: 5020
-      DATABASE_URL: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DATABASE}?charset=utf8mb4"
-
   db:
-    image: mysql:8.4
-    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    image: mysql:8.0
+    command: >
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
     env_file:
       - .env
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-heroes}
-      MYSQL_USER: ${MYSQL_USER:-heroes}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-heroes}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "mysqladmin ping -h localhost -uroot -p$${MYSQL_ROOT_PASSWORD} --silent || mysqladmin ping -h localhost -u$${MYSQL_USER} -p$${MYSQL_PASSWORD} --silent",
-        ]
-      interval: 10s
-      timeout: 10s
-      retries: 15
-      start_period: 40s
+      test: [
+        "CMD-SHELL",
+        "mysqladmin ping -h localhost -uroot -p$${MYSQL_ROOT_PASSWORD} --silent"
+      ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  web:
+    build:
+      context: .
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-5020} --workers 3
+    ports:
+      - "${PORT:-5020}:${PORT:-5020}"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: ${DB_HOST:-db}
+      DB_PORT: ${DB_PORT:-3306}
 
 volumes:
   mysql_data:
