@@ -12,8 +12,14 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 
 import os
-
 from pathlib import Path
+
+import dj_database_url
+
+
+def env_bool(name: str, default: str = "false") -> bool:
+    """Devuelve un booleano según el valor de entorno."""
+    return os.environ.get(name, default).strip().lower() in {"1", "true", "yes", "on"}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,17 +29,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&47k)c1tv*a0^)3siem@w6eowx^$8h6pwm&m)h43@4q+!699xa'
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    'django-insecure-&47k)c1tv*a0^)3siem@w6eowx^$8h6pwm&m)h43@4q+!699xa',
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env_bool("DJANGO_DEBUG", "true")
 
+_default_allowed_hosts = "localhost,127.0.0.1,heroesdelplaneta.onrender.com,heroesdelplaneta.co,www.heroesdelplaneta.co"
 ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    'heroesdelplaneta.onrender.com',
-    'heroesdelplaneta.co',
-    'www.heroesdelplaneta.co'
+    host.strip()
+    for host in os.environ.get("DJANGO_ALLOWED_HOSTS", _default_allowed_hosts).split(",")
+    if host.strip()
 ]
 
 
@@ -89,25 +97,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-import dj_database_url
-import os
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'heroes_local',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-'''
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://',  # Render lo sobreescribe con la variable de entorno
-        conn_max_age=600,
-        ssl_require=True,
+        default=os.environ.get("DATABASE_URL", "postgresql://heroes:heroes@db:5432/heroes"),
+        conn_max_age=int(os.environ.get("DB_CONN_MAX_AGE", "600")),
+        ssl_require=env_bool("DB_SSL_REQUIRE", "true"),
     )
 }
 
@@ -149,7 +143,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -157,19 +153,13 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 LOGIN_REDIRECT_URL = '/mis-certificados/'
 LOGOUT_REDIRECT_URL = '/login/'
 LOGIN_URL = '/login/'
-from django.contrib.messages import constants as messages
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

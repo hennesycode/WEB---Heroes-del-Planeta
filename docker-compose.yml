@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:5020 --workers 3
+    ports:
+      - "5020:5020"
+    env_file:
+      - .env
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_SSL_REQUIRE: "false"
+      PORT: 5020
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: heroes
+      POSTGRES_USER: heroes
+      POSTGRES_PASSWORD: heroes
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U heroes -d heroes"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
